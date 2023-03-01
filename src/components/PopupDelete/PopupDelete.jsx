@@ -1,7 +1,6 @@
-import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { Button } from '../Button/Button';
-import {} from '../Popup';
+import { Popup } from '../Popup';
 
 export const PopupDelete = ({ title, onDelete, onClose }) => {
   return (
