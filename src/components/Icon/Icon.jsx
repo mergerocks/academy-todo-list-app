@@ -11,14 +11,14 @@ export const ICON_TYPES = [
   'check',
 ];
 
-const withIcon = (Icon) => {
-  return ({ className, ...props }) => {
+const withIcon = (Component) => {
+  return function Icon ({ className, ...props }) {
     return (
       <svg
-        className={props.className}
+        className={className}
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24">
-        <Icon {...props} />
+        <Component {...props} />
       </svg>
     );
   };
