@@ -1,0 +1,17 @@
+.container {
+  position: fixed;
+  width: 100vw;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  background-color: rgba(0,0,0, 0.2);
+}
+
+.card {
+  padding: 32px;
+  background-color: white;
+}

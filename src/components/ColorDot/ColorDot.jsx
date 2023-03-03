@@ -1,8 +1,14 @@
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
+import styles from './ColorDot.module.css';
 
 export const ColorDot = ({ className, color }) => {
-  return <span style={{ backgroundColor: color }} className={clsx(className)} />;
+  return (
+    <span
+      style={{ backgroundColor: color }}
+      className={clsx(styles.container, className)}
+    />
+  );
 };
 
 ColorDot.propTypes = {

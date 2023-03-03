@@ -1,6 +1,7 @@
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { ICON_TYPES, Icon } from '../Icon';
+import styles from './Button.module.css';
 
 export const Button = ({
   className,
@@ -9,15 +10,23 @@ export const Button = ({
   icon,
   size,
   children,
+  fluid,
 }) => {
   return (
     <button
       onClick={onClick}
-      className={clsx(className, styles[variant], styles[size], {
-        [style.hasIcon]: icon && variant !== 'icon',
-      })}>
-      {!!icon && <Icon name={icon} />}
-      {variant !== 'icon' && <span>{children}</span>}
+      className={clsx(
+        styles.container,
+        styles[`variant-${variant}`],
+        styles[`size-${size}`],
+        {
+          [styles.hasIcon]: icon && variant !== 'icon',
+          [styles.fluid]: fluid,
+        },
+        className
+      )}>
+      {!!icon && <Icon className={styles.icon} name={icon} />}
+      {variant !== 'icon' && <span className={styles.text}>{children}</span>}
     </button>
   );
 };
@@ -26,9 +35,10 @@ Button.propTypes = {
   className: PropTypes.string,
   variant: PropTypes.oneOf(['primary', 'text', 'icon', 'danger', 'dashed']),
   icon: PropTypes.oneOf(ICON_TYPES),
-  size: PropTypes.oneOf(['s', 'm', 'l']),
+  size: PropTypes.oneOf(['m', 'l']),
   onClick: PropTypes.func.isRequired,
   children: PropTypes.string,
+  fluid: PropTypes.bool,
 };
 
 Button.defaultProps = {

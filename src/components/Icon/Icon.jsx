@@ -11,18 +11,19 @@ export const ICON_TYPES = [
   'check',
 ];
 
-const withIcon = (Component) => {
-  return function Icon ({ className, ...props }) {
-    return (
-      <svg
-        className={className}
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24">
-        <Component {...props} />
-      </svg>
-    );
-  };
-};
+// Example with HOC
+// const withIcon = (Component) => {
+//   return function Icon ({ className, ...props }) {
+//     return (
+//       <svg
+//         className={className}
+//         xmlns="http://www.w3.org/2000/svg"
+//         viewBox="0 0 24 24">
+//         <Component {...props} />
+//       </svg>
+//     );
+//   };
+// };
 
 const IconComponent = ({ name }) => {
   switch (name) {
@@ -73,7 +74,7 @@ const IconComponent = ({ name }) => {
         <path
           fillRule="evenodd"
           clipRule="evenodd"
-          d="M12.5791 3.08754C12.807 3.31535 12.807 3.68469 12.5791 3.9125L6.16248 10.3292C5.93467 10.557 5.56533 10.557 5.33752 10.3292L2.42085 7.4125C2.19305 7.18469 2.19305 6.81535 2.42085 6.58754C2.64866 6.35974 3.01801 6.35974 3.24581 6.58754L5.75 9.09173L11.7542 3.08754C11.982 2.85974 12.3513 2.85974 12.5791 3.08754Z"
+          d="M20.7071 5.29289C21.0976 5.68342 21.0976 6.31658 20.7071 6.70711L9.70711 17.7071C9.31658 18.0976 8.68342 18.0976 8.29289 17.7071L3.29289 12.7071C2.90237 12.3166 2.90237 11.6834 3.29289 11.2929C3.68342 10.9024 4.31658 10.9024 4.70711 11.2929L9 15.5858L19.2929 5.29289C19.6834 4.90237 20.3166 4.90237 20.7071 5.29289Z"
         />
       );
   }
@@ -83,7 +84,19 @@ IconComponent.propTypes = {
   name: PropTypes.oneOf(ICON_TYPES),
 };
 
-export const Icon = withIcon(IconComponent);
+export const Icon = ({ className, ...props }) => {
+  return (
+    <svg
+      className={className}
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24">
+      <IconComponent {...props} />{' '}
+    </svg>
+  );
+};
+
+// Example with HOC
+// export const Icon = withIcon(IconComponent);
 
 Icon.propTypes = {
   className: PropTypes.string,

@@ -1,0 +1,101 @@
+.container {
+  cursor: pointer;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: none;
+  border: none;
+  background-color: transparent;
+}
+
+.text {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.variant-primary {
+  background-color: #6a6e74;
+  padding: 0 16px;
+  height: 32px;
+  border-radius: 8px;
+}
+
+.variant-primary:hover {
+  background-color: #292d32;
+}
+
+.variant-primary .text {
+  color: white;
+}
+
+.variant-icon .icon {
+  fill: #6a6e74;
+  width: inherit;
+  height: inherit;
+}
+
+.variant-icon:hover .icon {
+  fill: #292d32;
+}
+
+.size-m {
+  width: 24px;
+  height: 24px;
+}
+
+.size-l {
+  width: 40px;
+  height: 40px;
+}
+
+.variant-danger {
+  padding: 0 16px;
+  height: 32px;
+  border-radius: 8px;
+  background-color: #ff4f4f;
+}
+
+.variant-danger:hover {
+  background-color: #eb0404;
+}
+
+.variant-danger .text {
+  color: white;
+}
+
+.variant-dashed {
+  padding: 0 16px;
+  height: 32px;
+  border-radius: 8px;
+  background-color: white;
+  border: 1px dashed #6a6e74;
+}
+
+.variant-dashed:hover {
+  background-color: white;
+  border-color: #292d32;
+}
+
+.variant-dashed .text {
+  color: #6a6e74;
+}
+
+.variant-dashed:hover .text {
+  color: #292d32;
+}
+
+.variant-text {
+  padding: 0 4px;
+  height: 18px;
+  border-radius: 4px;
+}
+
+.hasIcon .icon {
+  width: 14px;
+  height: 14px;
+  margin-right: 4px;
+}
+
+.fluid {
+  width: 100%;
+}

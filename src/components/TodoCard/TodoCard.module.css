@@ -1,0 +1,45 @@
+.container {
+  padding: 16px 24px;
+  border-radius: 8px;
+  background-color: #fff8d5;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 13px;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.actionButton:not(:last-child) {
+  margin-right: 12px;
+}
+
+.text {
+  font-size: 14px;
+  font-weight: 400;
+  margin-bottom: 16px;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.colorList {
+  display: flex;
+}
+
+.color {
+  flex-shrink: 0;
+}
+
+.color:not(:last-child) {
+  margin-right: 8px;
+}
