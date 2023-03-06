@@ -1,15 +1,12 @@
-import { useState } from 'react';
-import {
-  Popup,
-  TodoCard,
-  Tag,
-  Button,
-  ColorDot,
-  PopupDelete,
-} from '../components';
+import { useMemo, useState } from 'react';
+
+import { TodoCard, Tag, Button, PopupDelete, PopupEdit } from '../components';
 import { EditableButton } from '../components/EditableButton';
+import { useTags } from '../hooks/useTags';
+import { deleteItemFromArray, editItemInArray } from '../utils';
 
 export const App = function App() {
+  const tagsState = useTags();
   const [todos, setTodos] = useState([
     {
       id: 1,
@@ -33,51 +30,118 @@ export const App = function App() {
       tags: [2, 3],
     },
   ]);
-  const [tags, setTags] = useState([
-    { id: 1, color: 'blue', name: 'work' },
-    { id: 2, color: 'green', name: 'study' },
-    { id: 3, color: 'red', name: 'family' },
-  ]);
   const [editTodoId, setEditTodoId] = useState(null);
   const [deleteTodoId, setDeleteTodoId] = useState(null);
-  const [activeTagId, setActiveTagId] = useState(null);
+ 
+  const todoEditing = useMemo(() => {
+    if (editTodoId === 'new') {
+      return {};
+    }
+    return todos.find(({ id }) => id === editTodoId);
+  }, [editTodoId, todos]);
+
+
+  const onSaveTodo = (newTodo) => {
+    editItemInArray({
+      item: { id: editTodoId, ...newTodo },
+      list: todos,
+      setState: setTodos,
+      onCleanup: setEditTodoId,
+    });
+  };
+
+  const onCreateTodo = (newTodo) => {
+    setTodos((prevState) => [
+      ...prevState,
+      {
+        id: Date.now(),
+        done: false,
+        ...newTodo,
+      },
+    ]);
+    setEditTodoId(null);
+  };
+
+  const onDeleteTodo = () =>
+    deleteItemFromArray({
+      list: todos,
+      id: deleteTodoId,
+      setState: setTodos,
+      onCleanup: setDeleteTodoId,
+    });
 
   return (
-    <div>
+    <>
+      {tagsState.delitingId && (
+        <PopupDelete
+          title="Do you really want to delete this tag?"
+          onClose={() => tagsState.setDelitingId(null)}
+          onDelete={tagsState.delete}
+        />
+      )}
+      {deleteTodoId && (
+        <PopupDelete
+          title="Do you really want to delete this tag?"
+          onClose={() => setDeleteTodoId(null)}
+          onDelete={onDeleteTodo}
+        />
+      )}
+      {!!todoEditing && (
+        <PopupEdit
+          title={todoEditing?.title}
+          text={todoEditing?.text}
+          tags={tagsState.data}
+          selectedTags={todoEditing?.tags}
+          onClose={() => setEditTodoId(null)}
+          onSave={editTodoId === 'new' ? onCreateTodo : onSaveTodo}
+        />
+      )}
       <div>
-        {tags.map((tag) => {
-          return (
-            <Tag
-              key={tag.id}
-              color={tag.color}
-              active={activeTagId === tag.id}
-              isEditable
-              onClick={() => setActiveTagId(tag.id)}
-              onSave={async (value) => {
-                const copy = [...tags];
-                const idx = copy.findIndex(({ id }) => id === tag.id);
-                const hasMatch = tags.some(({ name }) => name === value);
-                if (idx >= 0 && !hasMatch) {
-                  copy.splice(idx, 1, { ...tag, name: value });
-                  setTags(copy);
-                  return true;
-                }
-                return false;
-              }}
-              onDelete={() => {
-                const copy = [...tags];
-                const idx = copy.findIndex(({ id }) => id === tag.id);
-                if (idx >= 0) {
-                  copy.splice(idx, 1);
-                  setTags(copy);
-                }
-              }}>
-              {tag.name}
-            </Tag>
-          );
-        })}
+        <header>
+          <h1>TODO App</h1>
+          <Button
+            icon="plus"
+            variant="icon"
+            onClick={() => setEditTodoId('new')}
+          />
+        </header>
+        <div>
+          {tagsState.data.map((tag) => {
+            return (
+              <Tag
+                key={tag.id}
+                color={tag.color}
+                active={tagsState.activeId === tag.id}
+                isEditable
+                onClick={() => tagsState.setActiveId(tag.id)}
+                onSave={(name) => tagsState.update({ ...tag, name })}
+                onDelete={() => tagsState.setDelitingId(tag.id)}>
+                {tag.name}
+              </Tag>
+            );
+          })}
+          <EditableButton onSave={tagsState.create} icon="plus">
+            Add new
+          </EditableButton>
+        </div>
+        <div>
+          {todos.map((todo) => {
+            return (
+              <TodoCard
+                key={todo.id}
+                done={todo.done}
+                onDelete={() => setDeleteTodoId(todo.id)}
+                onDoneChange={(done) => onSaveTodo({ ...todo, done })}
+                onEdit={() => setEditTodoId(todo.id)}
+                text={todo.text}
+                title={todo.title}
+                tags={tagsState.getParsedTags(todo.tags)}
+              />
+            );
+          })}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

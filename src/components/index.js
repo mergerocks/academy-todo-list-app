@@ -7,3 +7,4 @@ export * from './Popup';
 export * from './PopupDelete';
 export * from './TodoCard';
 export * from './Tag';
+export * from './PopupEdit';

@@ -4,6 +4,10 @@
   background-color: #fff8d5;
 }
 
+.done .text {
+  text-decoration: line-through;
+}
+
 .header {
   display: flex;
   justify-content: space-between;

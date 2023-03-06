@@ -10,11 +10,13 @@ export const Button = ({
   icon,
   size,
   children,
+  disabled,
   fluid,
 }) => {
   return (
     <button
       onClick={onClick}
+      disabled={disabled}
       className={clsx(
         styles.container,
         styles[`variant-${variant}`],
@@ -39,6 +41,7 @@ Button.propTypes = {
   onClick: PropTypes.func.isRequired,
   children: PropTypes.string,
   fluid: PropTypes.bool,
+  disabled: PropTypes.bool,
 };
 
 Button.defaultProps = {

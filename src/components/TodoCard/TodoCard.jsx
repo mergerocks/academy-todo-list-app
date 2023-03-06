@@ -16,7 +16,8 @@ export const TodoCard = ({
   onEdit,
 }) => {
   return (
-    <article className={clsx(styles.container, className)}>
+    <article
+      className={clsx(styles.container, { [styles.done]: done }, className)}>
       <header className={styles.header}>
         <h2 className={styles.title}>{title}</h2>
         <div className={styles.row}>

@@ -7,7 +7,14 @@ import { Input } from '../Input';
 import styles from './EditableButton.module.css';
 
 export const EditableButton = ({ className, children, icon, onSave }) => {
-  const { inputRef, isInputActive, onBlur, onChage, value } = useEditable({
+  const {
+    inputRef,
+    isInputActive,
+    handleSave,
+    setIsInputActive,
+    onChage,
+    value,
+  } = useEditable({
     onSave,
     cleanAfterSuccess: true,
   });
@@ -17,9 +24,10 @@ export const EditableButton = ({ className, children, icon, onSave }) => {
       {isInputActive ? (
         <Input
           ref={inputRef}
-          onBlur={onBlur}
+          onBlur={handleSave}
           value={value}
           onChange={onChage}
+          onEnterPress={handleSave}
           size="small"
         />
       ) : (
